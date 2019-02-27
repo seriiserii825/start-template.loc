@@ -2,7 +2,7 @@
 
 let gulp = require('gulp'),
   //css
-  sass = require('gulp-sass'),
+  stylus = require('gulp-stylus'),
   stylelint = require("stylelint"),
   autoprefixer = require("gulp-autoprefixer"),
   sourcemaps = require('gulp-sourcemaps'),
@@ -89,15 +89,11 @@ gulp.task('pug', function () {
 //=======================
 
 gulp.task("css", function () {
-  return gulp.src('src/assets/sass/style.scss')
+  return gulp.src('src/assets/stylus/style.styl')
     .pipe(gp.plumber())
     .pipe(gp.sourcemaps.init())
-    .pipe(gp.wait(500))
-    .pipe(sass({
-      outputStyle: 'expanded'
-    }).on('error', notify.onError(function (error) {
-      return 'An error occurred while compiling sass.\nLook in the console for details.\n' + error;
-    })))
+    // .pipe(gp.wait(500))
+    .pipe(stylus())
     .pipe(gp.autoprefixer({
       cascade: false
     }))
@@ -189,7 +185,7 @@ gulp.task("clean", function (cb) {
 });
 
 gulp.task("watch", function () {
-  gulp.watch('src/assets/sass/**/*.scss', gulp.series('css'));
+  gulp.watch('src/assets/stylus/**/*.styl', gulp.series('css'));
   gulp.watch('src/pug/**/*.pug', gulp.series('pug'));
   gulp.watch('src/assets/js/**/*.js', gulp.series('js'));
   gulp.watch(['src/assets/i/**/*.*'], gulp.series("image"));
