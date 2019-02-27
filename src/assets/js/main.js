@@ -17,5 +17,4 @@ $(function () {
     fixedBackground: true
   });
 
-
 });
