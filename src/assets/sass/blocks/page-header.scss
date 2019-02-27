@@ -1,0 +1,44 @@
+@import "../partials/_variables.scss";
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+
+  &__logo {
+    background: $black-lighter-color;
+    padding: 29px 50px;
+    text-align: center;
+    @media screen and (min-width: $md) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 57px;
+      height: 397px;
+      background-color: #000;
+      background-image: url("../i/page-header/header-bg.jpg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      order: 2;
+
+      @media (min-resolution: 144dpi),
+            (min-resolution: 1.5dppx) {
+        background-image: url("../i/page-header/header-bg-x2.jpg");
+      }
+    }
+    @media screen and (min-width: $xl) {
+      height: 648px;
+    }
+  }
+
+  img {
+    @media screen and (min-width: $md) {
+      width: 380px;
+      height: 112px;
+    }
+    @media screen and (min-width: $xl) {
+      width: 380px;
+      height: 165px;
+    }
+  }
+}
