@@ -2,8 +2,8 @@
 
 let gulp = require('gulp'),
   //css
-  sass = require('gulp-sass'),
-  stylelint = require("stylelint"),
+  stylus = require('gulp-stylus'),
+  stylint = require('gulp-stylint'),
   autoprefixer = require("gulp-autoprefixer"),
   sourcemaps = require('gulp-sourcemaps'),
   wait = require('gulp-wait'),
@@ -73,7 +73,6 @@ gulp.task('svg', function () {
 
 gulp.task('pug', function () {
   return gulp.src('src/pug/pages/*.pug', {since: gulp.lastRun('pug')})
-    .pipe(gp.newer('build/'))
     .pipe(gp.debug({title: "pug"}))
     .pipe(gp.pug({
       pretty: true
@@ -89,22 +88,21 @@ gulp.task('pug', function () {
 //=======================
 
 gulp.task("css", function () {
-  return gulp.src('src/assets/sass/style.scss')
+  return gulp.src('src/assets/stylus/style.styl')
     .pipe(gp.plumber())
     .pipe(gp.sourcemaps.init())
-    .pipe(gp.wait(500))
-    .pipe(sass({
-      outputStyle: 'expanded'
-    }).on('error', notify.onError(function (error) {
-      return 'An error occurred while compiling sass.\nLook in the console for details.\n' + error;
-    })))
+    // .pipe(gp.wait(500))
+    .pipe(stylint({config: '.stylintrc'}))
+    .pipe(gp.debug({title: "stylus"}))
+		.pipe(stylint.reporter())
+    .pipe(stylus())
     .pipe(gp.autoprefixer({
       cascade: false
     }))
     .pipe(gulp.dest('build/assets/css/'))
     .pipe(gp.csso())
     .pipe(gp.rename("style.min.css"))
-    .pipe(gp.sourcemaps.write())
+    .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('build/assets/css/'))
     .pipe(browserSync.reload({
       stream: true
@@ -189,7 +187,7 @@ gulp.task("clean", function (cb) {
 });
 
 gulp.task("watch", function () {
-  gulp.watch('src/assets/sass/**/*.scss', gulp.series('css'));
+  gulp.watch('src/assets/stylus/**/*.styl', gulp.series('css'));
   gulp.watch('src/pug/**/*.pug', gulp.series('pug'));
   gulp.watch('src/assets/js/**/*.js', gulp.series('js'));
   gulp.watch(['src/assets/i/**/*.*'], gulp.series("image"));
