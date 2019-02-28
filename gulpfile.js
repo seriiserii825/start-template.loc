@@ -3,7 +3,7 @@
 let gulp = require('gulp'),
   //css
   stylus = require('gulp-stylus'),
-  stylelint = require("stylelint"),
+  stylint = require('gulp-stylint'),
   autoprefixer = require("gulp-autoprefixer"),
   sourcemaps = require('gulp-sourcemaps'),
   wait = require('gulp-wait'),
@@ -73,7 +73,6 @@ gulp.task('svg', function () {
 
 gulp.task('pug', function () {
   return gulp.src('src/pug/pages/*.pug', {since: gulp.lastRun('pug')})
-    .pipe(gp.newer('build/'))
     .pipe(gp.debug({title: "pug"}))
     .pipe(gp.pug({
       pretty: true
@@ -93,6 +92,9 @@ gulp.task("css", function () {
     .pipe(gp.plumber())
     .pipe(gp.sourcemaps.init())
     // .pipe(gp.wait(500))
+    .pipe(stylint({config: '.stylintrc'}))
+    .pipe(gp.debug({title: "stylus"}))
+		.pipe(stylint.reporter())
     .pipe(stylus())
     .pipe(gp.autoprefixer({
       cascade: false
@@ -100,7 +102,7 @@ gulp.task("css", function () {
     .pipe(gulp.dest('build/assets/css/'))
     .pipe(gp.csso())
     .pipe(gp.rename("style.min.css"))
-    .pipe(gp.sourcemaps.write())
+    .pipe(gp.sourcemaps.write('.'))
     .pipe(gulp.dest('build/assets/css/'))
     .pipe(browserSync.reload({
       stream: true
