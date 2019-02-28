@@ -6,7 +6,8 @@
     "gulp-cheerio": "^0.6.3",
     "gulp-svgmin": "^2.1.0",
     "jquery": "^3.3.1",
-    "postcss": "^7.0.6"
+    "postcss": "^7.0.6",
+    "ttf2woff2": "^2.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -32,6 +33,7 @@
     "gulp-stylint": "^4.0.2",
     "gulp-stylus": "^2.7.0",
     "gulp-svg-sprite": "^1.5.0",
+    "gulp-ttf2woff2": "^2.0.2",
     "gulp-uglify": "^3.0.1",
     "gulp-wait": "0.0.2",
     "gulp-webp": "^4.0.1",
