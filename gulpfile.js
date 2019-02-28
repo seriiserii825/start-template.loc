@@ -19,6 +19,7 @@ let gulp = require('gulp'),
   rename = require('gulp-rename'),
   svgSprite = require('gulp-svg-sprite'),
   clean   = require('gulp-cheerio-clean-svg'),
+	svgBg = require("gulp-svg-sprites"),
   //images
   webp = require('gulp-webp'),
   imagemin = require('gulp-imagemin'),
@@ -35,7 +36,7 @@ let gulp = require('gulp'),
   gp = require('gulp-load-plugins')();
 
 gulp.task('svg', function () {
-  return gulp.src('src/assets/i/svg/icon-*.svg', {since: gulp.lastRun('svg')})
+  return gulp.src('src/assets/i/svg/inline/*.svg', {since: gulp.lastRun('svg')})
   .pipe(gp.newer('build/assets/i/svg/sprite/'))
     .pipe(gp.svgmin({
       js2svg: {
@@ -62,16 +63,22 @@ gulp.task('svg', function () {
       }
     )))
     .pipe(gp.replace('&gt;', '>'))
-    .pipe(svgSprite({
+    .pipe(gp.svgSprite({
 			mode: {
 				symbol: {
 					sprite: "../sprite.svg",
 				}
 			}
     }))
-    .pipe(gulp.dest("build/assets/i/svg/sprite/"));
+    .pipe(gulp.dest("build/assets/i/svg/inline/"));
 });
 
+gulp.task('svg-bg', function () {
+    return gulp.src('src/assets/i/svg/bg/*.svg', {since: gulp.lastRun('svg')})
+				.pipe(gp.newer('build/assets/i/svg/bg'))
+        .pipe(svgBg())
+        .pipe(gulp.dest("build/assets/i/svg/bg"));
+});
 
 gulp.task('pug', function () {
   return gulp.src('src/pug/pages/*.pug', {since: gulp.lastRun('pug')})
@@ -173,11 +180,6 @@ gulp.task("image", function () {
   return gulp.src('src/assets/i/**/*.*', {since: gulp.lastRun('image')})
     .pipe(gp.newer('build/assets/i'))
     .pipe(gp.debug({title: "image"}))
-    .pipe(gp.imagemin([
-      imagemin.optipng({optimizationLevel: 3}),
-      imagemin.jpegtran({progressive: true}),
-      imagemin.svgo(),
-    ]))
     .pipe(gulp.dest('build/assets/i'))
     .pipe(browserSync.reload({
       stream: true
@@ -200,6 +202,7 @@ gulp.task("watch", function () {
   gulp.watch('src/assets/js/**/*.js', gulp.series('js'));
   gulp.watch(['src/assets/i/**/*.*'], gulp.series("image"));
   gulp.watch(['src/assets/i/svg/inline/*.*'], gulp.series("svg"));
+  gulp.watch(['src/assets/i/svg/bg/*.*'], gulp.series("svg-bg"));
   gulp.watch(['src/assets/fonts/**/*.*'], gulp.series("fonts"));
   /*watch('src/assets/audio/!**!/!*.*', function(event, cb){
       gulp.start("audio");
@@ -224,6 +227,7 @@ gulp.task('default', gulp.series(
     'js',
     'webp',
     'svg',
+    'svg-bg',
     'fonts',
     'image',
     'libs',
