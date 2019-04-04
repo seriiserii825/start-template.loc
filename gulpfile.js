@@ -2,8 +2,8 @@
 
 let gulp = require('gulp'),
   //css
-  stylus = require('gulp-stylus'),
-  stylint = require('gulp-stylint'),
+  // stylus = require('gulp-stylus'),
+  sass = require('gulp-sass'),
   autoprefixer = require("gulp-autoprefixer"),
   sourcemaps = require('gulp-sourcemaps'),
   wait = require('gulp-wait'),
@@ -18,12 +18,13 @@ let gulp = require('gulp'),
   svgmin = require('gulp-svgmin'),
   rename = require('gulp-rename'),
   svgSprite = require('gulp-svg-sprite'),
-  clean   = require('gulp-cheerio-clean-svg'),
+  cleanSvg   = require('gulp-cheerio-clean-svg'),
 	svgBg = require("gulp-svg-sprites"),
   //images
   webp = require('gulp-webp'),
-  imagemin = require('gulp-imagemin'),
+	tinypng = require('gulp-tinypng-compress'),
 	//fonts
+	ttf2woff = require('gulp-ttf2woff'),
 	ttf2woff2 = require('gulp-ttf2woff2'),
   //settings
   newer = require("gulp-newer"),
@@ -33,41 +34,42 @@ let gulp = require('gulp'),
   plumber = require("gulp-plumber"),
   browserSync = require('browser-sync').create(),
   rimraf = require("rimraf"),
-  gp = require('gulp-load-plugins')();
+  gulpif = require("gulp-if"),
+	replace = require('gulp-replace');
 
+gulp.task('ttf2woff', function(){
+  gulp.src(['src/assets/fonts/*.ttf'])
+    .pipe(debug({title: "woff"}))
+    .pipe(ttf2woff())
+    .pipe(gulp.dest('src/assets/fonts/'));
+});
+
+gulp.task('ttf2woff2', function(){
+  gulp.src(['src/assets/fonts/*.ttf'])
+    .pipe(debug({title: "woff2"}))
+    .pipe(ttf2woff2())
+    .pipe(gulp.dest('src/assets/fonts/'));
+});
+
+gulp.task('font-convert', gulp.parallel('ttf2woff2', 'ttf2woff'));
+
+//, {since: gulp.lastRun('svg')}
 gulp.task('svg', function () {
-  return gulp.src('src/assets/i/svg/inline/*.svg', {since: gulp.lastRun('svg')})
-  .pipe(gp.newer('build/assets/i/svg/sprite/'))
-    .pipe(gp.svgmin({
-      js2svg: {
-        pretty: true
-      }
-    }))
-    .pipe(gp.cheerio(clean(
-      {
-        removeSketchType: true,
-        removeEmptyGroup: true,
-        removeEmptyDefs: true,
-        removeEmptyLines: true,
-        removeComments: true,
-        tags: [
-          'title',
-          'desc',
-        ],
-        attributes: [
-          'style',
-          'fill*',
-          'stroke*',
-          "class"
-        ],
-      }
-    )))
-    .pipe(gp.replace('&gt;', '>'))
-    .pipe(gp.svgSprite({
+  return gulp.src('src/assets/i/svg/inline/*.svg')
+		.pipe(svgmin({
+			js2svg: {
+					pretty: true
+			}
+		}))
+    .pipe(replace('&gt;', '>'))
+    .pipe(svgSprite({
 			mode: {
 				symbol: {
 					sprite: "../sprite.svg",
 				}
+			},
+			svg: {
+				namespaceClassnames: false
 			}
     }))
     .pipe(gulp.dest("build/assets/i/svg/inline/"));
@@ -75,55 +77,54 @@ gulp.task('svg', function () {
 
 gulp.task('svg-bg', function () {
     return gulp.src('src/assets/i/svg/bg/*.svg', {since: gulp.lastRun('svg')})
-				.pipe(gp.newer('build/assets/i/svg/bg'))
+				.pipe(newer('build/assets/i/svg/bg'))
         .pipe(svgBg())
         .pipe(gulp.dest("build/assets/i/svg/bg"));
 });
 
 gulp.task('pug', function () {
-  return gulp.src('src/pug/pages/*.pug', {since: gulp.lastRun('pug')})
-    .pipe(gp.debug({title: "pug"}))
-    .pipe(gp.pug({
+  return gulp.src('src/pug/pages/*.pug')
+    .pipe(debug({title: "pug"}))
+    .pipe(pug({
       pretty: true
     }))
     .pipe(gulp.dest('build/'))
     .pipe(browserSync.reload({
       stream: true
     }));
-    // .on('end', browserSync.reload);
-  // .pipe(gp.notify("Change html"));
+  // .pipe(notify("Change html"));
 });
 
-//=======================
 
 gulp.task("css", function () {
-  return gulp.src('src/assets/stylus/style.styl')
-    .pipe(gp.plumber())
-    .pipe(gp.sourcemaps.init())
-    // .pipe(gp.wait(500))
-    .pipe(stylint({config: '.stylintrc'}))
-    .pipe(gp.debug({title: "stylus"}))
-		.pipe(stylint.reporter())
-    .pipe(stylus())
-    .pipe(gp.autoprefixer({
+  return gulp.src('src/assets/sass/style.scss')
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(wait(500))
+    .pipe(sass({
+      outputStyle: 'expanded'
+    }).on('error', notify.onError(function (error) {
+      return 'An error occurred while compiling sass.\nLook in the console for details.\n' + error;
+    })))
+    .pipe(autoprefixer({
       cascade: false
     }))
     .pipe(gulp.dest('build/assets/css/'))
-    .pipe(gp.csso())
-    .pipe(gp.rename("style.min.css"))
-    .pipe(gp.sourcemaps.write('.'))
+    .pipe(csso())
+    .pipe(rename("style.min.css"))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('build/assets/css/'))
     .pipe(browserSync.reload({
       stream: true
     }));
-  // .pipe(gp.notify("Change css"));
+  // .pipe(notify("Change css"));
 });
 
 //============================
 
 gulp.task("libs", function () {
   return gulp.src('src/assets/libs/**/*.*', {since: gulp.lastRun('libs')})
-    .pipe(gp.newer('src/assets/libs/**/*.*'))
+    .pipe(newer('src/assets/libs/**/*.*'))
     .pipe(gulp.dest('build/assets/libs'))
     .on('end', browserSync.reload);
 });
@@ -140,7 +141,7 @@ gulp.task("favicon", function () {
 ====================================================*/
 gulp.task("fonts", function () {
   return gulp.src('src/assets/fonts/**/*.*', {since: gulp.lastRun('fonts')})
-    .pipe(gp.newer('build/assets/fonts'))
+    .pipe(newer('build/assets/fonts'))
     .pipe(gulp.dest('build/assets/fonts'))
     .on('end', browserSync.reload);
 });
@@ -148,8 +149,8 @@ gulp.task("fonts", function () {
 
 gulp.task("webp", function () {
   return gulp.src('src/assets/i/**/*.{jpg, png}', {since: gulp.lastRun('webp')})
-    .pipe(gp.newer('build/assets/i'))
-    .pipe(gp.debug({title: "webp"}))
+    .pipe(newer('build/assets/i'))
+    .pipe(debug({title: "webp"}))
     .pipe(webp())
     .pipe(gulp.dest('build/assets/i'))
     .on('end', browserSync.reload);
@@ -157,39 +158,58 @@ gulp.task("webp", function () {
 
 gulp.task("js", function () {
   return gulp.src('src/assets/js/main.js')
-    .pipe(gp.sourcemaps.init())
-    .pipe(gp.plumber())
-    .pipe(gp.rigger())
-    .pipe(gp.babel({
+    .pipe(sourcemaps.init())
+    .pipe(plumber())
+    .pipe(rigger())
+    .pipe(babel({
       presets: ['@babel/env']
     }))
     .pipe(gulp.dest('build/assets/js'))
-    .pipe(gp.uglify())
-    .pipe(gp.rename("main.min.js"))
-    .pipe(gp.sourcemaps.write())
+    .pipe(uglify())
+    .pipe(rename("main.min.js"))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/assets/js'))
     .pipe(browserSync.reload({
       stream: true
     }));
-  // .pipe(gp.notify("Change js"));
+  // .pipe(notify("Change js"));
+});
+
+gulp.task("alljs", function(){
+	return gulp.src('src/assets/js/*.js')
+    .pipe(gulp.dest('build/assets/js'))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
 });
 
 /* image:dev
 ====================================================*/
 gulp.task("image", function () {
-  return gulp.src('src/assets/i/**/*.*', {since: gulp.lastRun('image')})
-    .pipe(gp.newer('build/assets/i'))
-    .pipe(gp.debug({title: "image"}))
+  return gulp.src('src/assets/i/*.*', {since: gulp.lastRun('image')})
+    .pipe(newer('build/assets/i'))
+    .pipe(debug({title: "image"}))
+		.pipe(gulpif('*.svg', svgmin({
+      js2svg: {
+        pretty: true
+      }
+    })))
     .pipe(gulp.dest('build/assets/i'))
     .pipe(browserSync.reload({
       stream: true
     }))
 });
 
-gulp.task('woff2', function(){
-  return gulp.src(['src/assets/ttf-font/*.ttf'])
-    .pipe(gp.ttf2woff2())
-    .pipe(gulp.dest('src/assets/fonts/'));
+gulp.task("tynipng", function (cb) {
+  return gulp.src('src/assets/i/*.*')
+		.pipe(gulpif('*.{jpg,png}',
+			tinypng({
+					key: 'n3bfGZY6wU3OWNZZAIigLe444WovtR9_',
+					sigFile: 'src/assets/i/.tinypng-sigs',
+					log: true
+				})
+			))
+    .pipe(gulp.dest('build/assets/i'));
 });
 
 gulp.task("clean", function (cb) {
@@ -197,10 +217,11 @@ gulp.task("clean", function (cb) {
 });
 
 gulp.task("watch", function () {
-  gulp.watch('src/assets/stylus/**/*.styl', gulp.series('css'));
+  gulp.watch('src/assets/sass/**/*.scss', gulp.series('css'));
   gulp.watch('src/pug/**/*.pug', gulp.series('pug'));
-  gulp.watch('src/assets/js/**/*.js', gulp.series('js'));
-  gulp.watch(['src/assets/i/**/*.*'], gulp.series("image"));
+  gulp.watch('src/assets/js/main.js', gulp.series('js'));
+  gulp.watch('src/assets/js/**/*.js', gulp.series('alljs'));
+  gulp.watch(['src/assets/i/*.*'], gulp.series("image"));
   gulp.watch(['src/assets/i/svg/inline/*.*'], gulp.series("svg"));
   gulp.watch(['src/assets/i/svg/bg/*.*'], gulp.series("svg-bg"));
   gulp.watch(['src/assets/fonts/**/*.*'], gulp.series("fonts"));
@@ -221,17 +242,17 @@ gulp.task('browser-sync', function () {
 
 gulp.task('default', gulp.series(
   'clean',
+	'svg',
   gulp.parallel(
-    'pug',
     'css',
     'js',
-    'webp',
-    'svg',
-    'svg-bg',
+    'alljs',
+    // 'webp',
+    // 'svg-bg',
     'fonts',
     'image',
     'libs',
     'favicon'
   ),
-  gulp.parallel('watch', 'browser-sync')
+  gulp.parallel('pug', 'watch', 'browser-sync')
 ));

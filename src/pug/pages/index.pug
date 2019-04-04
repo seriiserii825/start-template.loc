@@ -1,23 +1,15 @@
 extends template
 
-block css
-
 block title
 	title Главная
 
 block content
-	.container
+	.hidden
+		include ../../../build/assets/i/svg/inline/sprite.svg
 
-		span.icon.clap
+	.container-big
 
-		p Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, et consequuntur obcaecati, architecto temporibus perspiciatis amet provident debitis consectetur laudantium nihil assumenda optio, commodi ratione deleniti? Voluptatem doloremque aspernatur consectetur!
-
-	//footer
-	|
-	|
-block comment-scripts
-block scripts
-	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-	script(src="assets/libs/jquery-easy-scroll/jquery.easeScroll.js")
+	include ../includes/ie-scripts
+	include ../includes/scripts.pug
 	script(src="assets/js/main.min.js")
 

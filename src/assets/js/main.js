@@ -17,4 +17,38 @@ $(function () {
     fixedBackground: true
   });
 
+	//show menu
+	let closeMenu = $('#js-close-menu');
+	let showMenu = $('#js-show-menu');
+	let navMenu = $('#js-nav-menu');
+
+
+	closeMenu.on('click', function(){
+		closeMenu.hide();
+		showMenu.show();
+		navMenu.slideUp();
+	});
+
+	showMenu.on('click', function(){
+		closeMenu.show();
+		showMenu.hide();
+		navMenu.slideDown();
+	});
+
+	//reviews-slider
+	$('#js-reviews-slider').slick({
+
+	});
+
+	let videoImage = $('#js-video__img');
+	let videoPlay = $('#js-video__play');
+
+	videoPlay.on('click', function(){
+		videoPlay.fadeOut();
+		videoImage.fadeOut();
+	});
+
 });
+
+
+

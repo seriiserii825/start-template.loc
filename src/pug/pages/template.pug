@@ -6,25 +6,20 @@ html(lang="ru_RU")
 
 		meta(charset="utf-8")
 
-		block append css
+		block css
+			//- link(rel="stylesheet" type="text/css" href="assets/i/svg/bg/css/sprite.css")
 			link(rel="stylesheet" type="text/css" href="assets/css/style.min.css")
-			link(rel="stylesheet" type="text/css" href="assets/i/svg/bg/css/sprite.css")
 
-		title
-			block title
+		//- block yandex-api
+
+		block title
 
 	body
 		block content
 
-			block main-nav
+			//- block main-nav
 
-		block comment-scripts
-
-		<!--[if lt IE 9]>
-		<script src="assets/libs/html5shiv/es5-shim.min.js"></script>
-		<script src="assets/libs/html5shiv/html5shiv.min.js"></script>
-		<script src="assets/libs/html5shiv/html5shiv-printshiv.min.js"></script>
-		<script src="assets/libs/html5shiv/respond.min.js"></script>
-		<!--<![endif]-->
-
-		block scripts
+		//- block scripts
+		//- 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		//- 	script(src="assets/libs/jquery-easy-scroll/jquery.easeScroll.js")
+		//- 	script(src="assets/js/main.min.js")
