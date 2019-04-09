@@ -5,11 +5,10 @@ block title
 
 block content
 	.hidden
-		include ../../../build/assets/i/svg/inline/sprite.svg
+		//- include ../../../build/assets/i/svg/inline/sprite.svg
 
-	.container-big
-
-	include ../includes/ie-scripts
-	include ../includes/scripts.pug
+	include ../includes/scripts/ie-scripts
+	include ../includes/scripts/scripts.pug
+	script(src="assets/libs/slick/slick/slick.min.js")
 	script(src="assets/js/main.min.js")
 

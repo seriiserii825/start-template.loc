@@ -1,7 +1,7 @@
 @import 'partials/fonts';
 @import 'partials/variables';
 @import 'partials/mixins';
-// @import '../libs/slick/slick/slick.scss';
+@import '../libs/slick/slick/slick.scss';
 // @import '../libs/plyr/dist/plyr.css'
 // @import '../../../build/assets/i/svg/bg/css/sprite.css'
 html,
@@ -15,7 +15,7 @@ body {
 	padding-bottom: 700px;
 	font-family: 'Open Sans', 'Arial', sans-serif;
 	line-height: 30px;
-	color: $tundora;
+	// color: $tundora;
 	background: $white;
 }
 
@@ -75,21 +75,3 @@ p {
 	width: 1050px;
 	// outline: 1px solid #f00;
 }
-
-@media screen and (max-width: $xl) {
-	.container {
-		width: 668px;
-	}
-}
-
-@media screen and (max-width: $md) {
-	.container {
-		width: 260px;
-	}
-}
-
-.section-title {
-	font-size: 53px;
-	line-height: 57px;
-}
-
