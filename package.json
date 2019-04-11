@@ -1,5 +1,5 @@
 {
-  "name": "baby-toy",
+  "name": "start-template",
   "version": "1.0.0",
   "main": "original_gulpfile.js",
   "dependencies": {
@@ -32,6 +32,8 @@
     "gulp-rigger": "^0.5.8",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
+    "gulp-stylint": "^4.0.2",
+    "gulp-stylus": "^2.7.0",
     "gulp-svg-sprite": "^1.5.0",
     "gulp-svg-sprites": "^4.1.2",
     "gulp-svgmin": "^2.1.0",
