@@ -2,3 +2,54 @@ reset-list()
 	margin 0
 	padding 0
 	list-style-type none
+
+size(number)
+	width number
+	height number
+
+placeholder-input(color)
+	&[type='text']::-webkit-input-placeholder,
+	&[type='email']::-webkit-input-placeholder,
+	&[type='phone']::-webkit-input-placeholder
+		color color
+
+	&[type='text']::-moz-placeholder,
+	&[type='email']::-moz-placeholder,
+	&[type='phone']::-moz-placeholder
+		color color
+
+	/* webkit */
+
+	&[type='text']:-moz-placeholder,
+	&[type='email']:-moz-placeholder,
+	&[type='phone']:-moz-placeholder
+		color color
+
+	/* webkit */
+
+	&[type='text']:-ms-input-placeholder,
+	&[type='email']:-ms-input-placeholder,
+	&[type='phone']:-ms-input-placeholder
+		color color
+
+// placeholder-input(color)
+// 	&[type='phone']::-webkit-input-placeholder
+// 		color color
+
+placeholder-textarea(color)
+	&::-webkit-input-placeholder
+		color color
+	/* webkit */
+
+	&::-moz-placeholder
+		color color
+
+	/* webkit */
+
+	&:-moz-placeholder
+		color color
+
+	/* webkit */
+
+	&:-ms-input-placeholder
+		color color

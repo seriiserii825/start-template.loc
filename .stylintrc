@@ -27,7 +27,7 @@
   "quotePref": "single",
   "semicolons": true,
   "universal": true,
-  "valid": true,
+  "valid": false,
   "whitespace": true,
   "zeroUnits": true,
   "zIndexDuplicates": false,

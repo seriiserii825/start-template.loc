@@ -120,7 +120,7 @@ gulp.task("css", function () {
 		.pipe(browserSync.reload({
 			stream: true
 		}));
-	// .pipe(gp.notify("Change css"));
+	// .pipe(notify("Change css"));
 });
 
 //============================
