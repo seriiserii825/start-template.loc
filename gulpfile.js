@@ -183,6 +183,14 @@ gulp.task("alljs", function(){
     }));
 });
 
+gulp.task("audio", function () {
+	return gulp.src('src/assets/audio/**/*.*')
+		.pipe(gulp.dest('build/assets/audio/'))
+		.pipe(browserSync.reload({
+			stream: true
+		}));
+});
+
 /* image:dev
 ====================================================*/
 gulp.task("image", function () {
@@ -225,9 +233,7 @@ gulp.task("watch", function () {
   gulp.watch(['src/assets/i/svg/inline/*.*'], gulp.series("svg"));
   gulp.watch(['src/assets/i/svg/bg/*.*'], gulp.series("svg-bg"));
   gulp.watch(['src/assets/fonts/**/*.*'], gulp.series("fonts"));
-  /*watch('src/assets/audio/!**!/!*.*', function(event, cb){
-      gulp.start("audio");
-  });*/
+	gulp.watch(['src/assets/audio/**/*.*'], gulp.series("audio"));
 });
 
 gulp.task('browser-sync', function () {
@@ -250,6 +256,7 @@ gulp.task('default', gulp.series(
     // 'webp',
     // 'svg-bg',
     'fonts',
+		'audio',
     'image',
     'libs',
     'favicon'
