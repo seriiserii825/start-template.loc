@@ -14,7 +14,7 @@ body {
 	padding: 0;
 	padding-bottom: 700px;
 	font-family: 'Open Sans', 'Arial', sans-serif;
-	font-size: 16px;
+	font-size: 20px;
 	line-height: 30px;
 	color: $tundora;
 	background: maroon;
@@ -52,12 +52,6 @@ p {
 	display: none;
 }
 
-.container-big {
-	margin: 0 auto;
-	width: 1250px;
-	// outline: 1px solid #008000;
-}
-
 @media screen and (max-width: $xl) {
 	.container-big {
 		width: 768px;
@@ -73,6 +67,5 @@ p {
 
 .container {
 	margin: 0 auto;
-	@include size(30px);
+	width: 1200px;
 }
-
