@@ -73,5 +73,6 @@ p {
 
 .container {
 	margin: 0 auto;
-	width: 1050px;
+	@include size(30px);
 }
+
