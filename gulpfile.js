@@ -3,7 +3,6 @@
 let gulp = require('gulp'),
 	//css
 	// stylus = require('gulp-stylus'),
-	convertNewline = require("gulp-convert-newline"),
 	sass = require('gulp-sass'),
 	autoprefixer = require("gulp-autoprefixer"),
 	sourcemaps = require('gulp-sourcemaps'),
@@ -37,52 +36,6 @@ let gulp = require('gulp'),
 	rimraf = require("rimraf"),
 	gulpif = require("gulp-if"),
 	replace = require('gulp-replace');
-
-gulp.task("endlinepug", function() {
-    return gulp.src("src/pug/**/*.*")
-        .pipe(convertNewline({
-            newline: "crlf",
-            encoding: "shift_jis"
-        }))
-        .pipe(gulp.dest("src/pug/**/*.*"));
-});
-
-gulp.task("endlinesass", function() {
-    return gulp.src("src/assets/sass/**/*.*")
-        .pipe(convertNewline({
-            newline: "crlf",
-            encoding: "shift_jis"
-        }))
-        .pipe(gulp.dest("src/assets/sass/**/*.*"));
-});
-
-gulp.task("endlinelibs", function() {
-    return gulp.src("src/assets/libs/**/*.*")
-        .pipe(convertNewline({
-            newline: "crlf",
-            encoding: "shift_jis"
-        }))
-        .pipe(gulp.dest("src/assets/libs/**/*.*"));
-});
-
-gulp.task("endlinejs", function() {
-    return gulp.src("src/assets/js/**/*.*")
-        .pipe(convertNewline({
-            newline: "crlf",
-            encoding: "shift_jis"
-        }))
-        .pipe(gulp.dest("src/assets/js/**/*.*"));
-});
-
-gulp.task('endline', gulp.series(
-	gulp.parallel(
-		'endlinepug',
-		'endlinesass',
-		'endlinelibs',
-		'endlinejs'
-	)
-));
-
 
 gulp.task('ttf2woff', function(){
 	gulp.src(['src/assets/fonts/*.ttf'])
