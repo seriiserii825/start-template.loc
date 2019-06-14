@@ -2,7 +2,6 @@
 @import 'partials/variables';
 @import 'partials/mixins';
 @import '../libs/slick/slick/slick.scss';
-// @import '../libs/plyr/dist/plyr.css'
 // @import '../../../build/assets/i/svg/bg/css/sprite.css'
 html,
 body {
@@ -17,7 +16,7 @@ body {
 	font-size: 20px;
 	line-height: 30px;
 	color: $tundora;
-	background: maroon;
+	background: pink;
 }
 
 * {
