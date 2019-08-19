@@ -97,7 +97,7 @@ gulp.task('pug', function () {
 
 
 gulp.task("css", function () {
-	return gulp.src('src/assets/sass/style.scss')
+	return gulp.src('src/assets/sass/my.scss')
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(wait(500))

@@ -1,0 +1,70 @@
+@import 'partials/fonts';
+@import 'partials/variables';
+@import 'partials/mixins';
+@import '../libs/slick/slick/slick.scss';
+// @import '../../../build/assets/i/svg/bg/css/sprite.css'
+html,
+body {
+	font-size: 17px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	padding-bottom: 700px;
+	font-family: 'Open Sans', 'Arial', sans-serif;
+	font-size: 20px;
+	line-height: 30px;
+	color: $tundora;
+	background: maroon;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+ul {
+	@include reset-list;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+@media screen and (max-width: $xl) {
+	.container-big {
+		width: 768px;
+	}
+}
+
+@media screen and (max-width: $md) {
+	.container-big {
+		padding: 0 30px;
+		width: 320px;
+	}
+}
+
+.container {
+	margin: 0 auto;
+	width: 1200px;
+}
