@@ -38,14 +38,14 @@ let gulp = require('gulp'),
 	replace = require('gulp-replace');
 
 gulp.task('ttf2woff', function(){
-	gulp.src(['src/assets/fonts/*.ttf'])
+return	gulp.src(['src/assets/fonts/*.ttf'])
 		.pipe(debug({title: "woff"}))
 		.pipe(ttf2woff())
 		.pipe(gulp.dest('src/assets/fonts/'));
 });
 
 gulp.task('ttf2woff2', function(){
-	gulp.src(['src/assets/fonts/*.ttf'])
+return	gulp.src(['src/assets/fonts/*.ttf'])
 		.pipe(debug({title: "woff2"}))
 		.pipe(ttf2woff2())
 		.pipe(gulp.dest('src/assets/fonts/'));
