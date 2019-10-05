@@ -109,9 +109,6 @@ gulp.task("css", function () {
 		.pipe(autoprefixer({
 			cascade: false
 		}))
-		.pipe(gulp.dest('build/assets/css/'))
-		.pipe(csso())
-		.pipe(rename("style.min.css"))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('build/assets/css/'))
 		.pipe(browserSync.reload({
