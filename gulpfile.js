@@ -155,16 +155,6 @@ gulp.task("webp", function () {
 
 gulp.task("js", function () {
 	return gulp.src('src/assets/js/main.js')
-		.pipe(sourcemaps.init())
-		.pipe(plumber())
-		.pipe(rigger())
-		.pipe(babel({
-			presets: ['@babel/env']
-		}))
-		.pipe(gulp.dest('build/assets/js'))
-		.pipe(uglify())
-		.pipe(rename("main.min.js"))
-		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('build/assets/js'))
 		.pipe(browserSync.reload({
 			stream: true
