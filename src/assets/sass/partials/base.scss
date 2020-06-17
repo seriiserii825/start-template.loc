@@ -46,3 +46,9 @@ p {
   margin: 0 auto;
   max-width: 1200px;
 }
+
+
+input[type="submit"]:disabled {
+  cursor: not-allowed !important;
+  opacity: .6 !important;
+}
