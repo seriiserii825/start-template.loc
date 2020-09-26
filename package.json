@@ -1,67 +1,33 @@
 {
-  "name": "start-template",
+  "name": "start-template.loc",
   "version": "1.0.0",
-  "main": "original_gulpfile.js",
-  "dependencies": {
-    "bower": "^1.8.8",
-    "gulp-cheerio": "^0.6.3",
-    "jquery": "^3.4.1",
-    "postcss": "^7.0.6",
-    "slick": "^1.12.2",
-    "slick-carousel": "^1.8.1",
-    "ttf2woff2": "^2.0.3"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
-    "browser-sync": "^2.26.7",
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-cheerio-clean-svg": "github:Hiswe/gulp-cheerio-clean-svg",
-    "gulp-csso": "^3.0.1",
-    "gulp-debug": "^4.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-load-plugins": "^1.6.0",
-    "gulp-newer": "^1.4.0",
-    "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.0",
-    "gulp-pug": "^4.0.1",
-    "gulp-rename": "^1.4.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-rigger": "^0.5.8",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-svg-sprite": "^1.5.0",
-    "gulp-svg-sprites": "^4.1.2",
-    "gulp-svgmin": "^2.1.0",
-    "gulp-tinypng-compress": "^1.2.5",
-    "gulp-ttf2woff": "^1.1.1",
-    "gulp-ttf2woff2": "^2.0.2",
-    "gulp-uglify": "^3.0.1",
-    "gulp-wait": "0.0.2",
-    "gulp-webp": "^4.0.1",
-    "pug-lint": "^2.5.0",
-    "stylelint": "^9.10.1",
-    "stylelint-config-recommended": "^2.1.0",
-    "stylelint-order": "^2.0.0",
-    "svgo": "^1.2.0"
-  },
+  "description": "Главная ветка - final",
+  "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "sass-lint -v",
-    "lint:fix": "sass-lint-auto-fix"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/seriiserii825/sedona.loc.git"
+    "url": "git+https://github.com/seriiserii825/start-template.loc.git"
   },
-  "keywords": [],
-  "author": "serii <seriiburduja@gmail.com>",
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/seriiserii825/sedona.loc/issues"
+    "url": "https://github.com/seriiserii825/start-template.loc/issues"
   },
-  "homepage": "https://github.com/seriiserii825/sedona.loc#readme",
-  "description": "I don't have a nastavnik"
+  "homepage": "https://github.com/seriiserii825/start-template.loc#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.12",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-debug": "^4.0.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-pug": "^4.0.1",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-wait": "0.0.2",
+    "rimraf": "^3.0.2"
+  }
 }

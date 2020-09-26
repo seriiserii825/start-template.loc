@@ -1,7 +1,6 @@
 extends template
 
 block css
-	//- link(rel="stylesheet" type="text/css" href="assets/i/svg/bg/css/sprite.css")
 	link(rel="stylesheet" type="text/css" href="assets/css/my.css")
 
 block title
@@ -9,15 +8,12 @@ block title
 
 block content
 	include ../includes/mixins
-	.hidden
-		include ../../../build/assets/i/svg/inline/sprite.svg
 
 	.container
-		p Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat amet, recusandae id eaque, fugiat nihil quibusdam adipisci cupiditate animi architecto tempora! Ipsam temporibus ipsa illo qui sed, quis minus earum?
 		h1.workansbold Con Bludelego puoi:
-		h1.gothik Con Bludelego puoi:
+		p Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat amet, recusandae id eaque, fugiat nihil quibusdam adipisci cupiditate animi architecto tempora! Ipsam temporibus ipsa illo qui sed, quis minus earum?
 
 	include ../includes/scripts/ie-scripts
 
 block scripts
-	//script(src="assets/libs/jquery-easy-scroll/jquery.easeScroll.js")
+	script(src="assets/js/main.js")
