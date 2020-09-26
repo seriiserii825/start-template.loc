@@ -4,3 +4,22 @@
 @import '../libs/slick/slick/slick.scss';
 
 @import 'partials/base';
+body {
+  padding-bottom: 800px;
+  text-align: center;
+}
+
+h1 {
+  margin: 80px;
+  font-size: 40px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.my-button {
+  display: inline-block;
+  margin-top: 1400px;
+  color: yellow;
+}
+.sub-menu {
+  display: none;
+}

@@ -9,11 +9,21 @@ block title
 block content
 	include ../includes/mixins
 
-	.container
-		h1.workansbold Con Bludelego puoi:
-		p Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat amet, recusandae id eaque, fugiat nihil quibusdam adipisci cupiditate animi architecto tempora! Ipsam temporibus ipsa illo qui sed, quis minus earum?
+	h1 Webpack IE 11 Browser lists
 
-	include ../includes/scripts/ie-scripts
+	.container
+		p Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat amet, recusandae id eaque, fugiat nihil quibusdam adipisci cupiditate animi architecto tempora! Ipsam temporibus ipsa illo qui sed, quis minus earum?
+		a.open-list(href="#") open list
+		ul
+			li first
+			li second
+			li third
+				ul.sub-menu
+					li fourth
+					li third
+					li fifth
+
+		a.my-button(href="#") My button
 
 block scripts
 	script(src="assets/js/main.js")

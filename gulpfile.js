@@ -11,8 +11,38 @@ let gulp = require('gulp'),
 	debug = require("gulp-debug"),
 	notify = require("gulp-notify"),
 	plumber = require("gulp-plumber"),
+	gulpif = require("gulp-if"),
 	browserSync = require('browser-sync').create(),
 	rimraf = require("rimraf");
+const webpack = require('webpack-stream');
+
+let isDev = true;
+
+let webpackConfig = {
+	output: {
+		filename: "main.js"
+	},
+	module: {
+		rules: [
+			{
+				test: "/\.js$/",
+				loader: "babel-loader",
+				exclude: "/node_modules/"
+			}
+		]
+	},
+	mode: isDev ? 'development' : 'production',
+	devtool: isDev ? 'eval-source-map' : 'none',
+};
+
+gulp.task('webpack', function () {
+	return gulp.src('src/assets/js/main.js')
+		.pipe(webpack(webpackConfig))
+		.pipe(gulp.dest('build/assets/js/'))
+		.pipe(browserSync.reload({
+			stream: true
+		}));
+});
 
 gulp.task('pug', function () {
 	return gulp.src('src/pug/pages/*.pug')
@@ -29,7 +59,7 @@ gulp.task('pug', function () {
 gulp.task("scss", function () {
 	return gulp.src('src/assets/sass/my.scss')
 		.pipe(plumber())
-		.pipe(sourcemaps.init())
+		.pipe(gulpif(isDev, sourcemaps.init()))
 		.pipe(wait(500))
 		.pipe(sass({
 			outputStyle: 'expanded'
@@ -39,7 +69,7 @@ gulp.task("scss", function () {
 		.pipe(autoprefixer({
 			cascade: false
 		}))
-		.pipe(sourcemaps.write('.'))
+		.pipe(gulpif(isDev, sourcemaps.write('.')))
 		.pipe(gulp.dest('build/assets/css/'))
 		.pipe(browserSync.reload({
 			stream: true
@@ -63,7 +93,7 @@ gulp.task("fonts", function () {
 		.pipe(gulp.dest('build/assets/fonts'))
 		.on('end', browserSync.reload);
 });
-gulp.task("alljs", function(){
+gulp.task("alljs", function () {
 	return gulp.src('src/assets/js/*.js')
 		.pipe(gulp.dest('build/assets/js'))
 		.pipe(browserSync.reload({
@@ -98,13 +128,13 @@ gulp.task("watch", function () {
 	});
 	gulp.watch('src/assets/sass/**/*.scss', gulp.series('scss'));
 	gulp.watch('src/pug/**/*.pug', gulp.series('pug'));
-	gulp.watch('src/assets/js/**/*.js', gulp.series('alljs'));
+	gulp.watch('src/assets/js/**/*.js', gulp.series('webpack'));
 	gulp.watch(['src/assets/i/**/*.*'], gulp.series("image"));
 	gulp.watch(['src/assets/libs/**/*.*'], gulp.series("libs"));
 	gulp.watch(['src/assets/fonts/**/*.*'], gulp.series("fonts"));
 	gulp.watch(['src/assets/audio/**/*.*'], gulp.series("audio"));
 });
-let build = gulp.series('clean', gulp.parallel('pug', 'scss', 'alljs', 'fonts', 'audio', 'image', 'libs', 'favicon'));
+let build = gulp.series('clean', gulp.parallel('webpack', 'pug', 'scss', 'alljs', 'fonts', 'audio', 'image', 'libs', 'favicon'));
 
 gulp.task('build', build);
 
