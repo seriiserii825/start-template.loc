@@ -3,6 +3,8 @@
 let gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	autoprefixer = require("gulp-autoprefixer"),
+	csso = require('gulp-csso'),
+	rename = require('gulp-rename'),
 	sourcemaps = require('gulp-sourcemaps'),
 	wait = require('gulp-wait'),
 	pug = require('gulp-pug'),
@@ -72,6 +74,9 @@ gulp.task("scss", function () {
 			cascade: false
 		}))
 		.pipe(gcmq())
+		.pipe(gulp.dest('build/assets/css/'))
+		.pipe(csso())
+		.pipe(rename("my.min.css"))
 		.pipe(gulpif(isDev, sourcemaps.write('.')))
 		.pipe(gulp.dest('build/assets/css/'))
 		.pipe(browserSync.reload({
