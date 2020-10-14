@@ -74,9 +74,6 @@ gulp.task("scss", function () {
 			cascade: false
 		}))
 		.pipe(gcmq())
-		.pipe(gulp.dest('build/assets/css/'))
-		.pipe(csso())
-		.pipe(rename("my.min.css"))
 		.pipe(gulpif(isDev, sourcemaps.write('.')))
 		.pipe(gulp.dest('build/assets/css/'))
 		.pipe(browserSync.reload({

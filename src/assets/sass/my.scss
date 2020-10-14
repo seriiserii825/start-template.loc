@@ -2,16 +2,9 @@
 @import 'partials/variables';
 @import 'partials/mixins';
 @import '../libs/slick/slick/slick.scss';
-
 @import 'partials/base';
 
-body {
-  padding-bottom: 800px;
-  text-align: center;
-  @media screen and (max-width: 992px) {
-	padding-bottom: 400px;
-  }
-}
+@import "blocks/header";
 
 h1 {
   margin: 80px;
@@ -41,3 +34,4 @@ h1 {
     display: block;
   }
 }
+
