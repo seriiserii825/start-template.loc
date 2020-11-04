@@ -73,7 +73,6 @@ gulp.task("scss", function () {
 		.pipe(autoprefixer({
 			cascade: false
 		}))
-		.pipe(gcmq())
 		.pipe(gulpif(isDev, sourcemaps.write('.')))
 		.pipe(gulp.dest('build/assets/css/'))
 		.pipe(browserSync.reload({
