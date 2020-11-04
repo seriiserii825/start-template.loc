@@ -3,35 +3,3 @@
 @import 'partials/mixins';
 @import '../libs/slick/slick/slick.scss';
 @import 'partials/base';
-
-@import "blocks/header";
-
-h1 {
-  margin: 80px;
-  font-size: 40px;
-  text-align: center;
-  text-transform: uppercase;
-  @media screen and (max-width: 576px) {
-	font-size: 30px;
-  }
-}
-
-.my-button {
-  display: inline-block;
-  margin-top: 1400px;
-  color: yellow;
-  @media screen and (max-width: 992px) {
-	margin-top: 1000px;
-  }
-  @media screen and (max-width: 768px) {
-	margin-top: 600px;
-  }
-}
-
-.sub-menu {
-  display: none;
-  @media screen and (max-width: 576px) {
-    display: block;
-  }
-}
-

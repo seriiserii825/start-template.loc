@@ -24,25 +24,23 @@ let isDev = true;
 
 let webpackConfig = {
 	output: {
-		filename: "main.js"
+		filename: "webpack.js"
 	},
 	module: {
-		rules: [
-			{
-				test: "/\.js$/",
-				loader: "babel-loader",
-				exclude: "/node_modules/"
-			}
-		]
+		rules: [{
+			test: "/\.js$/",
+			loader: "babel-loader",
+			exclude: "/node_modules/"
+		}]
 	},
 	mode: isDev ? 'development' : 'production',
 	devtool: isDev ? 'eval-source-map' : 'none',
 };
 
 gulp.task('webpack', function () {
-	return gulp.src('src/assets/js/main.js')
+	return gulp.src('src/assets/js/src/main.js')
 		.pipe(webpack(webpackConfig))
-		.pipe(gulp.dest('build/assets/js/'))
+		.pipe(gulp.dest('build/assets/js/dist/'))
 		.pipe(browserSync.reload({
 			stream: true
 		}));
@@ -50,7 +48,9 @@ gulp.task('webpack', function () {
 
 gulp.task('pug', function () {
 	return gulp.src('src/pug/pages/*.pug')
-		.pipe(debug({title: "pug"}))
+		.pipe(debug({
+			title: "pug"
+		}))
 		.pipe(pug({
 			pretty: true
 		}))
@@ -82,7 +82,9 @@ gulp.task("scss", function () {
 	// .pipe(notify("Change css"));
 });
 gulp.task("libs", function () {
-	return gulp.src('src/assets/libs/**/*.*', {since: gulp.lastRun('libs')})
+	return gulp.src('src/assets/libs/**/*.*', {
+			since: gulp.lastRun('libs')
+		})
 		.pipe(newer('src/assets/libs/**/*.*'))
 		.pipe(gulp.dest('build/assets/libs'))
 		.on('end', browserSync.reload);
@@ -93,7 +95,9 @@ gulp.task("favicon", function () {
 		.on('end', browserSync.reload);
 });
 gulp.task("fonts", function () {
-	return gulp.src('src/assets/fonts/**/*.*', {since: gulp.lastRun('fonts')})
+	return gulp.src('src/assets/fonts/**/*.*', {
+			since: gulp.lastRun('fonts')
+		})
 		.pipe(newer('build/assets/fonts'))
 		.pipe(gulp.dest('build/assets/fonts'))
 		.on('end', browserSync.reload);
@@ -101,6 +105,14 @@ gulp.task("fonts", function () {
 gulp.task("alljs", function () {
 	return gulp.src('src/assets/js/*.js')
 		.pipe(gulp.dest('build/assets/js'))
+		.pipe(browserSync.reload({
+			stream: true
+		}));
+});
+
+gulp.task("jquery", function () {
+	return gulp.src('src/assets/jquery/custom-jquery.js')
+		.pipe(gulp.dest('build/assets/jquery/'))
 		.pipe(browserSync.reload({
 			stream: true
 		}));
@@ -113,9 +125,13 @@ gulp.task("audio", function () {
 		}));
 });
 gulp.task("image", function () {
-	return gulp.src('src/assets/i/**/*.*', {since: gulp.lastRun('image')})
+	return gulp.src('src/assets/i/**/*.*', {
+			since: gulp.lastRun('image')
+		})
 		.pipe(newer('build/assets/i'))
-		.pipe(debug({title: "image"}))
+		.pipe(debug({
+			title: "image"
+		}))
 		.pipe(gulp.dest('build/assets/i'))
 		.pipe(browserSync.reload({
 			stream: true
@@ -134,12 +150,13 @@ gulp.task("watch", function () {
 	gulp.watch('src/assets/sass/**/*.scss', gulp.series('scss'));
 	gulp.watch('src/pug/**/*.pug', gulp.series('pug'));
 	gulp.watch('src/assets/js/**/*.js', gulp.series('webpack'));
+	gulp.watch('src/assets/jquery/*.js', gulp.series('jquery'));
 	gulp.watch(['src/assets/i/**/*.*'], gulp.series("image"));
 	gulp.watch(['src/assets/libs/**/*.*'], gulp.series("libs"));
 	gulp.watch(['src/assets/fonts/**/*.*'], gulp.series("fonts"));
 	gulp.watch(['src/assets/audio/**/*.*'], gulp.series("audio"));
 });
-let build = gulp.series('clean', gulp.parallel('webpack', 'pug', 'scss', 'alljs', 'fonts', 'audio', 'image', 'libs', 'favicon'));
+let build = gulp.series('clean', gulp.parallel('webpack', 'jquery', 'pug', 'scss', 'alljs', 'fonts', 'audio', 'image', 'libs', 'favicon'));
 
 gulp.task('build', build);
 

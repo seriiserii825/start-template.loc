@@ -30,4 +30,3 @@ let animationTitle = () => {
 	});
 };
 export default animationTitle;
-
