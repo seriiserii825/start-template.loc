@@ -10,4 +10,5 @@ node_modules/
 npm-debug.*
 bower_components/
 Thumbs.db
+.vscode/
 
